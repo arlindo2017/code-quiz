@@ -129,10 +129,13 @@ function showHighScores(event) {
     submitScoresEl.style.visibility = "hidden";
 }
 
-function resetGame() {
+function restartQuiz() {
+    quizHeaderEl.textContent = "Click Start to try again!";
     timerValue = initialTimer;
     timerEl.textContent = timerValue;
-    startSequence();
+    startBtnEl.style.visibility = "visible";
+    introEl.style.visibility = "visible";
+    quizScoresEl.style.visibility = "hidden";
 }
 
 function clearScores() {
@@ -214,7 +217,7 @@ function answerD() {
 // eventListeners for when user clicks in page
 startBtnEl.addEventListener('click',startSequence);
 submitBtnEl.addEventListener('click',showHighScores);
-goBackBtnEl.addEventListener('click',resetGame);
+goBackBtnEl.addEventListener('click',restartQuiz);
 clearScoresBtnEl.addEventListener('click',clearScores);
 
 
