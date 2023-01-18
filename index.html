@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Quiz</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+    <header>
+        <div>
+            <!-- <p>High Scores<span id="high-scores"></span></p> -->
+            <p>Time: <span id="timer">0</span></p>
+            <p>Game Status: <span id="game-status"></span></p>
+        </div>
+    </header>
+    <main>
+        <!-- Quiz Header -->
+        <div>
+        <h2 id="quiz-header"></h2>
+        </div>
+
+        <div class="quiz-body">
+        <!-- Buttons to start -->
+            <div id="quiz-options" class="panels">
+                <button id="option-a"></button>
+                <button id="option-b"></button>
+                <button id="option-c"></button>
+                <button id="option-d"></button>
+            </div>
+            <div id="submit-scores" class="panels">
+                <form action="">
+                    <label>Your Initials:</label><br>
+                    <input type="text" id="initials" value="JD">
+                    <button id="submit-btn" class="small-button">Submit Scores</button>
+                </form> 
+            </div>
+            <div id="quiz-scores" class="panels">
+                <button id="go-back-btn" class="small-button">Go Back</button>
+                <button id="clear-scores-btn" class="small-button">Clear Scores</button>
+            </div>
+        </div>
+        <!-- quiz Footer -->
+        <div id="quiz-footer">
+            <p id="intro">Welcome to our beginner JavaScript quiz! This quiz is designed to test your basic understanding of the JavaScript programming language. It will cover topics such as variables, data types, loops, and basic functions. Whether you're new to programming or just new to JavaScript, this quiz will help you solidify your understanding of the language and give you a better sense of your strengths and areas for improvement. Good luck!</p>
+            <button id="start-btn" class="small-button">Start Quiz</button>
+            <h4 id="answer-results"></h4>
+        </div>
+    </main>
+<script src="./assets/js/quiz-questions.js"></script>
+<script src="./assets/js/quiz.js"></script>
+
+</body>
+</html>
