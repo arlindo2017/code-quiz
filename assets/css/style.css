@@ -6,7 +6,7 @@ header div {
 }
 
 header div h3 {
-  padding: 0;
+  padding: 5px;
   margin: 0;
   justify-content: center;
 }
@@ -67,6 +67,12 @@ button:hover {
 #quiz-body {
   padding: 5px;
   margin: 5px;
+}
+
+.quiz-body {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
 }
 
 form {

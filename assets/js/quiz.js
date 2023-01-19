@@ -1,6 +1,6 @@
 // identify elements in the HTML page that will be modified
 var timerEl = document.getElementById('timer');
-var gameStatusEl = document.getElementById('game-status');
+var lastScoreEl = document.getElementById('last-score');
 var quizHeaderEl = document.getElementById('quiz-header');
 var answerResultEl = document.getElementById('answer-results');
 var introEl = document.getElementById('intro');
@@ -8,6 +8,9 @@ var answerAEl = document.getElementById('option-a');
 var quizOptionsEl = document.getElementById('quiz-options');
 var submitScoresEl = document.getElementById('submit-scores');
 var quizScoresEl = document.getElementById('quiz-scores');
+var initialsEl = document.getElementById('initials');
+//var scoresEl = document.getElementById("scores");
+
 
 //Identify Buttons
 var startBtnEl = document.getElementById('start-btn');
@@ -46,10 +49,11 @@ var gameStatus = false;
 
 //Inital Values rendered in the HTML when page loads
 timerEl.textContent = timerValue;
-gameStatusEl.textContent = gameStatus;
+//gameStatusEl.textContent = gameStatus;
 quizHeaderEl.textContent = "Click Start Quiz to begin!";
+lastScoreEl.textContent = localStorage.getItem("score");
 
-//timer
+// timer
 // function startTimer() {
 //     var intervalId = setInterval(function() {
 //         timerValue--;
@@ -114,6 +118,8 @@ function startSequence() {
 function showOutOfTime() {
     quizHeaderEl.textContent = "Clock ran out\nYour Final Score : " + timerValue;
     gameStatusFalse();
+    localStorage.clear("scores");
+    lastScoreEl.textContent = "";
 }
 
 function showGameResults() {
@@ -122,12 +128,29 @@ function showGameResults() {
     gameStatusFalse();
 }
 
+
 function showHighScores(event) {
     event.preventDefault(); 
-    quizHeaderEl.textContent = "High Game Scores."
+    quizHeaderEl.textContent = "Your Score."
     quizScoresEl.style.visibility = "visible";
     submitScoresEl.style.visibility = "hidden";
+    
+    var storedScores = localStorage.getItem("score");
+    if (storedScores !== null) {
+        localStorage.clear("scores");
+        localStorage.setItem("score", initialsEl.value + " - "+ timerValue);
+        quizHeaderEl.textContent =  "Your Score: " + localStorage.getItem("score");
+        answerResultEl.textContent = "Score Updated.";
+        console.log("score updated");
+    }else {
+        localStorage.setItem("score", initialsEl.value + " - "+ timerValue);
+        quizHeaderEl.textContent =  "Your Score: " + localStorage.getItem("score");
+        answerResultEl.textContent = "Score added.";
+        console.log("Score added");
+    }
+          
 }
+
 
 function restartQuiz() {
     quizHeaderEl.textContent = "Click Start to try again!";
@@ -136,18 +159,20 @@ function restartQuiz() {
     startBtnEl.style.visibility = "visible";
     introEl.style.visibility = "visible";
     quizScoresEl.style.visibility = "hidden";
+    lastScoreEl.textContent = localStorage.getItem("score");
 }
 
 function clearScores() {
-    console.log("Scores have been cleared.")
-    // add paramater to clear scores
+    console.log("Scores have been cleared.");
+    localStorage.clear("scores");
+    quizHeaderEl.textContent = "No Scores available";
+    answerResultEl.textContent = "Scores Cleared"; 
 }
-
 
 // set visibility based on game status
 function gameStatusTrue() {
     gameStatus = true;
-    gameStatusEl.textContent = gameStatus;
+    //gameStatusEl.textContent = gameStatus;
     startBtnEl.style.visibility = "hidden";
     introEl.style.visibility = "hidden"; 
     quizOptionsEl.style.visibility = "visible";
@@ -157,7 +182,7 @@ function gameStatusTrue() {
 
 function gameStatusFalse() {
     gameStatus = false;
-    gameStatusEl.textContent = gameStatus;
+    //gameStatusEl.textContent = gameStatus;
     introEl.style.visibility = "hidden"; 
     quizOptionsEl.style.visibility = "hidden";
     answerResultEl.textContent = "";
