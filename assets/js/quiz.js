@@ -44,6 +44,7 @@ function generateRandomQuestion() {
 // Timer values, enter how long per question
 var initialTimer = (numberOfQuestions * 10);
 var timerPenalty = 10;
+
 var timerValue = initialTimer;
 var gameStatus = false;
 
@@ -53,27 +54,20 @@ timerEl.textContent = timerValue;
 quizHeaderEl.textContent = "Click Start Quiz to begin!";
 lastScoreEl.textContent = localStorage.getItem("score");
 
-// timer
-// function startTimer() {
-//     var intervalId = setInterval(function() {
-//         timerValue--;
-//         timerEl.textContent = timerValue;
+//timer
+var intervalId; 
+function startTimer() {
+   intervalId =  setInterval(function(){
+        if (timerValue === 0) {
+            clearInterval(intervalId);
+            showOutOfTime();
+        } else {
+        timerValue--;
+        timerEl.textContent = timerValue;
+        }
+    }, 1000);
     
-//         if (timerValue === 0 && gameStatus === true) {
-//             clearInterval(intervalId);
-//             gameStatus = false;
-//             timerValue = initialTimer; // Reset timerValue to the initialTimer value
-            
-//             hideAnswers();
-//             questionEl.textContent = "Time ran out, your score is : 0";
-//             gameStatusEl.textContent = gameStatus;
-//             startBtnEl.style.visibility = "visible";
-//         // } else if (timerValue < 0 && gameStatus === false) {
-//         //     clearInterval(intervalId);
-//         //     timerValue = initialTimer;
-//         }
-//     }, 1000);
-// }
+}
 
 
 
@@ -94,6 +88,7 @@ function startSequence() {
     if (quizNumber > numberOfQuestions) {
         console.log("Game Ended ....");
         showGameResults(); 
+        clearInterval(intervalId);
         quizNumber = 1;
         usedAnswers = [];
         console.log("QuizNumber variable set back to : "+ quizNumber);
@@ -120,6 +115,10 @@ function showOutOfTime() {
     gameStatusFalse();
     localStorage.clear("scores");
     lastScoreEl.textContent = "";
+    localStorage.setItem("score", 0);
+    quizScoresEl.style.visibility = "visible";
+    quizNumber = 1;
+    usedAnswers = [];
 }
 
 function showGameResults() {
@@ -138,12 +137,12 @@ function showHighScores(event) {
     var storedScores = localStorage.getItem("score");
     if (storedScores !== null) {
         localStorage.clear("scores");
-        localStorage.setItem("score", initialsEl.value + " - "+ timerValue);
+        localStorage.setItem("score", initialsEl.value + " = "+ timerValue);
         quizHeaderEl.textContent =  "Your Score: " + localStorage.getItem("score");
         answerResultEl.textContent = "Score Updated.";
         console.log("score updated");
     }else {
-        localStorage.setItem("score", initialsEl.value + " - "+ timerValue);
+        localStorage.setItem("score", initialsEl.value + " = "+ timerValue);
         quizHeaderEl.textContent =  "Your Score: " + localStorage.getItem("score");
         answerResultEl.textContent = "Score added.";
         console.log("Score added");
@@ -154,12 +153,14 @@ function showHighScores(event) {
 
 function restartQuiz() {
     quizHeaderEl.textContent = "Click Start to try again!";
+    clearInterval(intervalId);
     timerValue = initialTimer;
     timerEl.textContent = timerValue;
     startBtnEl.style.visibility = "visible";
     introEl.style.visibility = "visible";
     quizScoresEl.style.visibility = "hidden";
     lastScoreEl.textContent = localStorage.getItem("score");
+    answerResultEl.textContent = "";
 }
 
 function clearScores() {
@@ -239,8 +240,15 @@ function answerD() {
     }
 }
 
+function startQuiz () {
+    startSequence();
+    startTimer();
+    answerResultEl.textContent = "Timer Started, you have " + timerValue + " Seconds";
+    //console.log("Timer Started, you have " + timerValue + " Seconds");
+}
+
 // eventListeners for when user clicks in page
-startBtnEl.addEventListener('click',startSequence);
+startBtnEl.addEventListener('click',startQuiz);
 submitBtnEl.addEventListener('click',showHighScores);
 goBackBtnEl.addEventListener('click',restartQuiz);
 clearScoresBtnEl.addEventListener('click',clearScores);

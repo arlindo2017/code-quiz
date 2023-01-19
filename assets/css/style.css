@@ -5,10 +5,11 @@ header div {
   border-bottom: solid 1px black;
 }
 
-header div h3 {
+header div h4 {
   padding: 5px;
   margin: 0;
   justify-content: center;
+  height: 30px;
 }
 
 body {
@@ -27,7 +28,7 @@ main {
 
 button {
   width: 450px;
-  padding: 5px 10px 5px 20px;
+  padding: 10px 10px 10px 20px;
   margin: 2px;
   text-align: left;
   background-color: rgb(7, 7, 69);
@@ -53,8 +54,8 @@ button:hover {
   visibility: hidden;
 }
 .small-button {
-  width: 200px;
-  padding: 3px;
+  width: 150px;
+  padding: 5px;
   text-align: center;
 }
 
@@ -69,12 +70,18 @@ button:hover {
   margin: 5px;
 }
 
-.quiz-body {
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-}
-
 form {
   width: 50%;
+}
+
+#intro,
+#answer-results {
+  position: relative;
+  top: -100px;
+}
+
+#quiz-footer {
+  height: 100px;
+  margin: 0;
+  padding-bottom: 0;
 }
