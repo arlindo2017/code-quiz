@@ -1,30 +1,39 @@
 // identify elements in the HTML page that will be modified
 var timerEl = document.getElementById('timer');
 var lastScoreEl = document.getElementById('last-score');
-var quizHeaderEl = document.getElementById('quiz-header');
-var answerResultEl = document.getElementById('answer-results');
-var introEl = document.getElementById('intro');
-var answerAEl = document.getElementById('option-a');
-var quizOptionsEl = document.getElementById('quiz-options');
-var submitScoresEl = document.getElementById('submit-scores');
-var quizScoresEl = document.getElementById('quiz-scores');
+var quizHeaderEl = document.getElementById('header-message');
+
+// Panels
+var introEl = document.getElementById('intro-body');
+var quizOptionsEl = document.getElementById('question-body');
+var submitScoresEl = document.getElementById('submit-body');
+var quizScoresEl = document.getElementById('scores-body');
+var quizFooterEl = document.getElementById('footer-body');
+var answerResultEl = document.getElementById('footer-message');
+var quizCounterEl = document.getElementById('quiz-counter');
+
+// form buttons
 var initialsEl = document.getElementById('initials');
-//var scoresEl = document.getElementById("scores");
-
-
-//Identify Buttons
-var startBtnEl = document.getElementById('start-btn');
-var submitBtnEl = document.getElementById('submit-btn');
-var goBackBtnEl = document.getElementById('go-back-btn');
 var clearScoresBtnEl = document.getElementById('clear-scores-btn');
+var submitBtnEl = document.getElementById('submit-form');
+
+// Navigation Buttons
+var startBtnEl = document.getElementById('start-btn');
+var goBackBtnEl = document.getElementById('go-back-btn');
 var answerAEl = document.getElementById('option-a');
 var answerBEl = document.getElementById('option-b');
 var answerCEl = document.getElementById('option-c');
 var answerDEl = document.getElementById('option-d');
 
+// Global Variables
+var timerValue = 50;
+var highScores = [];
+var highScoresText = "";
+var savedScores = JSON.parse(localStorage.getItem("highscores"));
+
 // sets question number sequence
 var quizNumber = 1;
-var numberOfQuestions = 5;
+var numberOfQuestions = 10;
 
 // creates a unique random number from the quiz-questions.js
 var usedAnswers = [];
@@ -40,11 +49,9 @@ function generateRandomQuestion() {
     return randomNumber;
 }
 
-
 // Timer values, enter how long per question
 var initialTimer = (numberOfQuestions * 10);
 var timerPenalty = 10;
-
 var timerValue = initialTimer;
 var gameStatus = false;
 
@@ -52,7 +59,7 @@ var gameStatus = false;
 timerEl.textContent = timerValue;
 //gameStatusEl.textContent = gameStatus;
 quizHeaderEl.textContent = "Click Start Quiz to begin!";
-lastScoreEl.textContent = localStorage.getItem("score");
+lastScoreEl.textContent = localStorage.getItem("scores");
 
 //timer
 var intervalId; 
@@ -65,16 +72,13 @@ function startTimer() {
         timerValue--;
         timerEl.textContent = timerValue;
         }
-    }, 1000);
-    
+    }, 1000); 
 }
-
-
 
 // list of Questions printed to the buttons
 function showQuestionList() {
     console.log("Question # : " + (quizNumber) + " of " + (numberOfQuestions)); 
-
+    quizCounterEl.textContent = ("Question " + (quizNumber) + " of " + (numberOfQuestions));
     quizHeaderEl.textContent = quizQuestions[randomNumber].question;
     answerAEl.textContent = "a) - " + quizQuestions[randomNumber].answers['a'];
     answerBEl.textContent = "b) - " + quizQuestions[randomNumber].answers['b'];
@@ -83,10 +87,12 @@ function showQuestionList() {
     quizNumber++;          
 }   
 
+// Generate Questions
 function startSequence() {
     // Action when game is out of questions
     if (quizNumber > numberOfQuestions) {
         console.log("Game Ended ....");
+        quizCounterEl.textContent = "";
         showGameResults(); 
         clearInterval(intervalId);
         quizNumber = 1;
@@ -109,48 +115,53 @@ function startSequence() {
     }
 }
 
-//different states of the game, to show or hide depending on the status
+// Display when game is out of time
 function showOutOfTime() {
     quizHeaderEl.textContent = "Clock ran out\nYour Final Score : " + timerValue;
     gameStatusFalse();
-    localStorage.clear("scores");
-    lastScoreEl.textContent = "";
-    localStorage.setItem("score", 0);
+    lastScoreEl.textContent = 0;
+    localStorage.setItem("scores", 0);
     quizScoresEl.style.visibility = "visible";
+    quizFooterEl.style.backgroundColor = "#FFA07A";
+    quizCounterEl.textContent = "";
+    answerResultEl.textContent = "Out of time, better luck next time.";
     quizNumber = 1;
     usedAnswers = [];
+    highScores = [];
 }
 
+// Display when game ends
 function showGameResults() {
     submitScoresEl.style.visibility = "visible";
     quizHeaderEl.textContent = "End of Questions.\nEnter your initials and submit your scores of " + timerValue;
+    quizFooterEl.style.backgroundColor = "#dcdcdc";
     gameStatusFalse();
 }
 
-
+// Show scores
 function showHighScores(event) {
     event.preventDefault(); 
     quizHeaderEl.textContent = "Your Score."
     quizScoresEl.style.visibility = "visible";
     submitScoresEl.style.visibility = "hidden";
+    quizFooterEl.style.backgroundColor = "#dcdcdc";
     
-    var storedScores = localStorage.getItem("score");
+    var storedScores = localStorage.getItem("scores");
     if (storedScores !== null) {
         localStorage.clear("scores");
-        localStorage.setItem("score", initialsEl.value + " = "+ timerValue);
-        quizHeaderEl.textContent =  "Your Score: " + localStorage.getItem("score");
+        localStorage.setItem("scores", initialsEl.value + " :  "+ timerValue);
+        quizHeaderEl.textContent =  "Your Score: " + localStorage.getItem("scores");
         answerResultEl.textContent = "Score Updated.";
         console.log("score updated");
     }else {
-        localStorage.setItem("score", initialsEl.value + " = "+ timerValue);
-        quizHeaderEl.textContent =  "Your Score: " + localStorage.getItem("score");
+        localStorage.setItem("score", initialsEl.value + " :  "+ timerValue);
+        quizHeaderEl.textContent =  "Your Score: " + localStorage.getItem("scores");
         answerResultEl.textContent = "Score added.";
         console.log("Score added");
-    }
-          
+    }      
 }
 
-
+// Show screen to restart game
 function restartQuiz() {
     quizHeaderEl.textContent = "Click Start to try again!";
     clearInterval(intervalId);
@@ -159,21 +170,26 @@ function restartQuiz() {
     startBtnEl.style.visibility = "visible";
     introEl.style.visibility = "visible";
     quizScoresEl.style.visibility = "hidden";
-    lastScoreEl.textContent = localStorage.getItem("score");
-    answerResultEl.textContent = "";
+    lastScoreEl.textContent = localStorage.getItem("scores");
+    answerResultEl.textContent = "Scores Cleared"; 
+    quizFooterEl.style.backgroundColor = "#dcdcdc";
 }
 
-function clearScores() {
+// When user clears scores, resets all variables
+function clearScores(event) {
+    event.preventDefault();
     console.log("Scores have been cleared.");
-    localStorage.clear("scores");
-    quizHeaderEl.textContent = "No Scores available";
-    answerResultEl.textContent = "Scores Cleared"; 
+    localStorage.setItem("scores", 0);
+    quizScoresEl.style.visibility = "visible";
+    quizNumber = 1;
+    usedAnswers = [];
+    highScores = [];
+    restartQuiz();
 }
 
 // set visibility based on game status
 function gameStatusTrue() {
     gameStatus = true;
-    //gameStatusEl.textContent = gameStatus;
     startBtnEl.style.visibility = "hidden";
     introEl.style.visibility = "hidden"; 
     quizOptionsEl.style.visibility = "visible";
@@ -183,22 +199,31 @@ function gameStatusTrue() {
 
 function gameStatusFalse() {
     gameStatus = false;
-    //gameStatusEl.textContent = gameStatus;
     introEl.style.visibility = "hidden"; 
     quizOptionsEl.style.visibility = "hidden";
     answerResultEl.textContent = "";
 }
 
+function answeredCorrectly() {
+    quizFooterEl.style.backgroundColor = "#8FBC8F";
+    answerResultEl.textContent = "Correct.";
+}
+
+function answeredIncorrectly() {
+    quizFooterEl.style.backgroundColor = "#FFA07A";
+    answerResultEl.textContent = "Incorrect, -" + timerPenalty + " was deducted from your time.";
+}
+    
 // Buttons clicked by users
 function answerA() {
     console.log('You Clicked : a');
     if (quizQuestions[randomNumber].correctAnswer == 'a') {
-        answerResultEl.textContent = "Correct.";
+        answeredCorrectly()
         startSequence();  
     }else {
         timerValue = (timerValue - timerPenalty);
         timerEl.textContent = timerValue;
-        answerResultEl.textContent = "Incorrect, -" + timerPenalty + " was deducted from your time.";
+        answeredIncorrectly()
         startSequence(); 
     }
 }
@@ -206,53 +231,58 @@ function answerA() {
 function answerB() {
     console.log('You Clicked : b');
     if (quizQuestions[randomNumber].correctAnswer == 'b') {
-        answerResultEl.textContent = "Correct."
+        answeredCorrectly()
         startSequence();  
     }else {
         timerValue = (timerValue - timerPenalty);
         timerEl.textContent = timerValue;
-        answerResultEl.textContent = "Incorrect, -" + timerPenalty + " was deducted from your time.";
+        answeredIncorrectly()
         startSequence(); 
     }
 }
 function answerC() {
     console.log('You Clicked : c');
     if (quizQuestions[randomNumber].correctAnswer == 'c') {
-        answerResultEl.textContent = "Correct."
+        answeredCorrectly()
         startSequence();  
     }else {
         timerValue = (timerValue - timerPenalty);
         timerEl.textContent = timerValue;
-        answerResultEl.textContent = "Incorrect, -" + timerPenalty + " was deducted from your time.";
+        answeredIncorrectly()
         startSequence(); 
     }
 }
 function answerD() {
     console.log('You Clicked : d');
     if (quizQuestions[randomNumber].correctAnswer == 'd') {
-        answerResultEl.textContent = "Correct."
+        answeredCorrectly()
         startSequence();  
     }else {
         timerValue = (timerValue - timerPenalty);
         timerEl.textContent = timerValue;
-        answerResultEl.textContent = "Incorrect, -" + timerPenalty + " was deducted from your time.";
+        answeredIncorrectly()
         startSequence(); 
     }
 }
 
+// When user starts the quiz, launch these functions
 function startQuiz () {
     startSequence();
     startTimer();
     answerResultEl.textContent = "Timer Started, you have " + timerValue + " Seconds";
-    //console.log("Timer Started, you have " + timerValue + " Seconds");
 }
+
+function init() {
+    timerEl.style.color = "#00adb5";
+};
+
+init();
 
 // eventListeners for when user clicks in page
 startBtnEl.addEventListener('click',startQuiz);
 submitBtnEl.addEventListener('click',showHighScores);
 goBackBtnEl.addEventListener('click',restartQuiz);
 clearScoresBtnEl.addEventListener('click',clearScores);
-
 
 answerAEl.addEventListener('click', answerA);
 answerBEl.addEventListener('click', answerB);

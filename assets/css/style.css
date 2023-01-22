@@ -1,87 +1,97 @@
-header div {
-  display: flex;
-  padding: 10px 30px 0px 30px;
-  justify-content: space-between;
-  border-bottom: solid 1px black;
-}
-
-header div h4 {
-  padding: 5px;
-  margin: 0;
-  justify-content: center;
-  height: 30px;
-}
-
-body {
-  max-width: 1000px;
-  margin: auto;
-  border: solid black 1px;
-  padding: 10px;
-  border-radius: 10px;
-  margin-top: 30px;
-  height: 500px;
-}
-
-main {
-  padding: 10px;
+/* Custom Variables */
+:root {
+  --font-family: "Inter", sans-serif;
+  --teal: #00adb5;
+  --dark: #1e1e1e;
+  --white: #eeeeee;
+  --gray: #393e46;
+  --dark-gray: #222831;
+  --light-gray: #dcdcdc;
+  --orange: #d2691e;
 }
 
 button {
-  width: 450px;
+  width: 500px;
   padding: 10px 10px 10px 20px;
-  margin: 2px;
+  margin: 4px;
   text-align: left;
-  background-color: rgb(7, 7, 69);
-  color: aliceblue;
+  background-color: white;
+  color: var(--white);
+  background-color: var(--dark);
   font-weight: 1000;
-  border: 0px;
   border-radius: 10px;
 }
 
 button:hover {
-  background-color: rgb(23, 23, 129);
+  background-color: var(--gray);
 }
 
-#quiz-options {
-  display: flex;
-  flex-direction: column;
-  visibility: hidden;
-}
-
-#submit-scores,
-#quiz-scores {
-  display: block;
-  visibility: hidden;
-}
 .small-button {
   width: 150px;
   padding: 5px;
   text-align: center;
 }
 
-#quiz-header {
-  display: grid;
-  padding: 5px;
-  margin: 5px;
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 10px;
+  margin-top: 30px;
 }
 
-#quiz-body {
-  padding: 5px;
-  margin: 5px;
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px 0 20px;
+  margin: 0px;
+  border: solid var(--dark) 1px;
+  border-bottom: 0;
+  border-radius: 10px 10px 0 0;
+  background-color: var(--dark);
+  color: var(--white);
+}
+
+#title {
+  text-align: center;
+  margin: 0 0 20px 0;
+}
+
+section {
+  padding: 0 20px 0 20px;
+  margin: 0px;
+  border: solid var(--dark) 1px;
+  border-bottom: 0;
+  height: 400px;
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px 0 20px;
+  margin: 0px;
+  border: solid var(--dark) 1px;
+  border-radius: 0 0 10px 10px;
+  background-color: var(--light-gray);
+  border-top: 0;
+  height: 40px;
 }
 
 form {
   width: 50%;
 }
 
-#intro,
-#answer-results {
-  position: relative;
-  top: -100px;
+h4 {
+  margin: 0;
+  padding: 10px 0 10px 0;
 }
 
-#quiz-footer {
-  height: 100px;
-  margin: 0;
-  padding-bottom: 0;
+#question-body,
+#submit-body,
+#scores-body {
+  visibility: hidden;
+  height: 0px;
+}
+
+#intro-body {
+  height: 0;
 }

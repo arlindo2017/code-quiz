@@ -8,48 +8,62 @@
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
+    <h2 id="title">Javascript Quiz Game</h2>
     <header>
         <div>
             <!-- <p>High Scores<span id="high-scores"></span></p> -->
             <h3>Last Score: <span id="last-score"></span></h3> 
-            <h3>Time: <span id="timer">0</span></h3>
-            
         </div>
+        <div>
+            <h3>Time: <span id="timer">0</span></h3>
+        </div>
+        
     </header>
     <main>
+
+    <section>
         <!-- Quiz Header -->
         <div>
-        <h4 id="quiz-header"></h4>
+            <h3 id="header-message"></h3>
         </div>
-
-        <div class="quiz-body">
-        <!-- Buttons to start -->
-            <div id="quiz-options" class="panels">
-                <button id="option-a"></button>
-                <button id="option-b"></button>
-                <button id="option-c"></button>
-                <button id="option-d"></button>
-            </div>
-            <div id="submit-scores" class="panels">
-                <form action="">
-                    <label>Your Initials:</label><br>
-                    <input type="text" id="initials" value="JD">
-                    <button id="submit-btn" class="small-button">Submit Scores</button>
-                </form> 
-            </div>
-            <div id="quiz-scores" class="panels">
-                <h3 id="scores"></h3>
-                <button id="go-back-btn" class="small-button">Try Again</button>
-                <button id="clear-scores-btn" class="small-button">Clear Scores</button>
-            </div>
-        </div>
-        <!-- quiz Footer -->
-        <div id="quiz-footer">
+           <!-- Intro -->
+        <div id="intro-body">
             <p id="intro">Welcome to our beginner JavaScript quiz! This quiz is designed to test your basic understanding of the JavaScript programming language. It will cover topics such as variables, data types, loops, and basic functions. Whether you're new to programming or just new to JavaScript, this quiz will help you solidify your understanding of the language and give you a better sense of your strengths and areas for improvement. Good luck!</p>
             <button id="start-btn" class="small-button">Start Quiz</button>
-            <h4 id="answer-results"></h4>
         </div>
+        <!-- Buttons to start -->
+        <div id="question-body">
+            <button id="option-a"></button>
+            <button id="option-b"></button>
+            <button id="option-c"></button>
+            <button id="option-d"></button>
+        </div>
+
+        <div id="submit-body">
+            <form action="">
+                <!-- <label>Your Initials:</label><br> -->
+                <input type="text" id="initials" value="JD">
+                <button id="submit-form" class="small-button">Submit Scores</button>
+            </form> 
+        </div>
+        
+        <div id="scores-body">
+            <!-- <h3 >High Scores</h3> -->
+            <ul id="score-list"></ul>
+            <button id="go-back-btn" class="small-button">Try Again</button>
+            <button id="clear-scores-btn" class="small-button">Clear Scores</button>
+        </div> 
+    </section>
+    <footer id= "footer-body" >
+        <!-- quiz Footer -->
+            <h4 id="footer-message">Welcome</h4>
+            <h4 id="quiz-counter"></h4>
+    </footer>
+  
+     
     </main>
+    
+    
 <script src="./assets/js/quiz-questions.js"></script>
 <script src="./assets/js/quiz.js"></script>
 
