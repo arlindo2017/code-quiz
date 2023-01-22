@@ -89,6 +89,7 @@ function startSequence() {
         clearInterval(intervalId);
         console.log("Game Ended ....");
         quizHeaderEl.textContent = "Answered: Correctly = " + wins + "  Incorrectly = "+ loses;
+        answerResultEl.textContent = "Game reloading ...";
         gameStatusFalse();
         setTimeout(function() {
             showGameResults(); 
@@ -99,7 +100,7 @@ function startSequence() {
             console.log("QuizNumber variable set back to : "+ quizNumber);
             console.log("usedAnswers reset back to []");
             
-        }, 5000);
+        }, 4000);
   
     // When clock runs out
     } else if (timerValue === 0){
@@ -154,12 +155,12 @@ function showHighScores(event) {
         localStorage.setItem("scores", initialsEl.value + " :  "+ timerValue);
         quizHeaderEl.textContent =  "Your Score: " + localStorage.getItem("scores");
         answerResultEl.textContent = "Score Updated.";
-        console.log("score updated");
+        console.log("scores updated");
     }else {
-        localStorage.setItem("score", initialsEl.value + " :  "+ timerValue);
+        localStorage.setItem("scores", initialsEl.value + " :  "+ timerValue);
         quizHeaderEl.textContent =  "Your Score: " + localStorage.getItem("scores");
-        answerResultEl.textContent = "Score added.";
-        console.log("Score added");
+        answerResultEl.textContent = "Scores added.";
+        console.log("Scores added");
     }      
 }
 
@@ -203,7 +204,6 @@ function gameStatusFalse() {
     gameStatus = false;
     introEl.style.visibility = "hidden"; 
     quizOptionsEl.style.visibility = "hidden";
-    // answerResultEl.textContent = "";
 }
 
 function answeredCorrectly() {
