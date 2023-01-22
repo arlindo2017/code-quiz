@@ -25,12 +25,6 @@ var answerBEl = document.getElementById('option-b');
 var answerCEl = document.getElementById('option-c');
 var answerDEl = document.getElementById('option-d');
 
-// Global Variables
-var timerValue = 50;
-var highScores = [];
-var highScoresText = "";
-var savedScores = JSON.parse(localStorage.getItem("highscores"));
-
 // sets question number sequence
 var quizNumber = 1;
 var numberOfQuestions = 10;
@@ -38,6 +32,8 @@ var numberOfQuestions = 10;
 // creates a unique random number from the quiz-questions.js
 var usedAnswers = [];
 var randomNumber;
+var wins = 0;
+var loses = 0;
 
 function generateRandomQuestion() {
     randomNumber = Math.floor(Math.random() * quizQuestions.length);
@@ -57,7 +53,6 @@ var gameStatus = false;
 
 //Inital Values rendered in the HTML when page loads
 timerEl.textContent = timerValue;
-//gameStatusEl.textContent = gameStatus;
 quizHeaderEl.textContent = "Click Start Quiz to begin!";
 lastScoreEl.textContent = localStorage.getItem("scores");
 
@@ -91,14 +86,21 @@ function showQuestionList() {
 function startSequence() {
     // Action when game is out of questions
     if (quizNumber > numberOfQuestions) {
-        console.log("Game Ended ....");
-        quizCounterEl.textContent = "";
-        showGameResults(); 
         clearInterval(intervalId);
-        quizNumber = 1;
-        usedAnswers = [];
-        console.log("QuizNumber variable set back to : "+ quizNumber);
-        console.log("usedAnswers reset back to []");
+        console.log("Game Ended ....");
+        quizHeaderEl.textContent = "Answered: Correctly = " + wins + "  Incorrectly = "+ loses;
+        gameStatusFalse();
+        setTimeout(function() {
+            showGameResults(); 
+            quizCounterEl.textContent = "";
+            quizFooterEl.style.backgroundColor = "#dcdcdc";
+            quizNumber = 1;
+            usedAnswers = [];
+            console.log("QuizNumber variable set back to : "+ quizNumber);
+            console.log("usedAnswers reset back to []");
+            
+        }, 5000);
+  
     // When clock runs out
     } else if (timerValue === 0){
         console.log("Out of time ....");
@@ -201,17 +203,27 @@ function gameStatusFalse() {
     gameStatus = false;
     introEl.style.visibility = "hidden"; 
     quizOptionsEl.style.visibility = "hidden";
-    answerResultEl.textContent = "";
+    // answerResultEl.textContent = "";
 }
 
 function answeredCorrectly() {
     quizFooterEl.style.backgroundColor = "#8FBC8F";
     answerResultEl.textContent = "Correct.";
+    wins++;
+    setTimeout(function() {
+        quizFooterEl.style.backgroundColor = "#dcdcdc";
+        answerResultEl.textContent ="";
+    }, 2000);
 }
 
 function answeredIncorrectly() {
     quizFooterEl.style.backgroundColor = "#FFA07A";
     answerResultEl.textContent = "Incorrect, -" + timerPenalty + " was deducted from your time.";
+    loses++;
+    setTimeout(function() {
+        quizFooterEl.style.backgroundColor = "#dcdcdc";
+        answerResultEl.textContent ="";
+    }, 2000);
 }
     
 // Buttons clicked by users
