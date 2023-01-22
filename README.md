@@ -1,8 +1,6 @@
 # Javascript Knowledge Quiz
 
-In this page you will find a random password generator that will prompt the user for which type of characters to use and then create a password based on that criteria.
-
-Additionaly you will also see different methods of creating random numbers using the Math.random() and Math.floor() methods.
+In this quiz, you will be asked 10 random beginner javascript questions to test your knowledge. Game starts with 100 seconds on the clock (10 seconds per question) if you answered them incorrectly 10 seconds will be removed from the timer, at the end of the Quiz you can save your initials and score. If the clock runs out, you loose the game.
 
 ### Webpage Link
 https://arlindo2017.github.io/code-quiz/
@@ -11,7 +9,7 @@ https://arlindo2017.github.io/code-quiz/
 https://github.com/arlindo2017/code-quiz/
 
 ### Webpage Picture
-![Javascript Knowledge Quiz](./assets/img/password-generator.jpg)
+![Javascript Knowledge Quiz](./assets/img/javascript-quiz.jpg)
 
 ## Skills on display
 - Saving to Local Storage
